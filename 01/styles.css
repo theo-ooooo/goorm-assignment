@@ -1,0 +1,185 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: black;
+  color: white;
+  letter-spacing: -1.5px;
+}
+
+.header {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  padding: 0 30px;
+  gap: 40px;
+  position: fixed;
+  z-index: 1;
+  background-color: black;
+  color: white;
+}
+
+.logo > img {
+  height: 31px;
+}
+
+.menu_list {
+  display: flex;
+  gap: 20px;
+}
+
+.menu_list > li {
+  list-style: none;
+}
+
+.menu_list > li > a {
+  color: white;
+  text-decoration: none;
+}
+
+.main_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.main_wrap > .banner_wrap {
+  width: 100%;
+  position: relative;
+  height: 60vh;
+  min-height: 800px;
+  overflow: hidden;
+}
+
+.main_wrap > .banner_wrap > .banner_image::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30%; /* 아래쪽 40%만 그라데이션 */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0)
+  ); /* 검정 → 투명 */
+  pointer-events: none; /* 클릭 이벤트 방해 안 하도록 */
+}
+
+.main_wrap > .banner_wrap > .banner_image > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: brightness(50%);
+  object-fit: cover;
+}
+
+.main_wrap > .banner_wrap > .banner_content {
+  position: absolute;
+  top: 40%;
+  left: 4%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.main_wrap > .banner_wrap > .banner_content > .banner_content_title {
+  display: flex;
+  gap: 20px;
+  color: white;
+  align-items: center;
+}
+.main_wrap > .banner_wrap > .banner_content > .banner_content_title > img {
+  width: 108px;
+  height: 108px;
+  border-radius: 20px;
+}
+
+.main_wrap > .banner_wrap > .banner_content > .desc {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main_wrap > .banner_wrap > .banner_content > .desc > .head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.main_wrap > .banner_wrap > .banner_content > .desc > .head > .squt {
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.main_wrap > .banner_wrap > .banner_content > .desc > p {
+  font-size: 20px;
+}
+.main_wrap > .banner_wrap > .banner_content > .desc > .buttons {
+  display: flex;
+  gap: 10px;
+}
+.main_wrap > .banner_wrap > .banner_content > .desc > .buttons > button {
+  width: 100%;
+  height: 50px;
+  background: rgba(109, 109, 110, 0.7);
+  outline: none;
+  font-size: 20px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+.main_wrap
+  > .banner_wrap
+  .banner_content
+  > .desc
+  > .buttons
+  > button:first-child {
+  background-color: white;
+  color: black;
+}
+
+.movie_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 20px;
+}
+.movie_wrap > .movie_list {
+  display: grid;
+  gap: 20px;
+  overflow-x: auto;
+  grid-auto-flow: column;
+  grid-auto-columns: 400px;
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+
+.movie_wrap > .movie_list::-webkit-scrollbar {
+  display: none; /* 웹킷 브라우저에서 스크롤바 숨김 */
+}
+
+.movie_wrap > .movie_list > .movie_item {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.movie_wrap > .movie_list > .movie_item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16/9;
+}
+
+.movie_wrap > .movie_list > .movie_item:hover {
+  transform: scale(1.2);
+  z-index: 2;
+}
