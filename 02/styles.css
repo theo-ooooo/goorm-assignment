@@ -76,6 +76,10 @@ input.add_input {
   box-sizing: border-box;
 }
 
+.todo_item.checked {
+  opacity: 0.7;
+}
+
 .todo_item > .buttons {
   display: flex;
   gap: 10px;

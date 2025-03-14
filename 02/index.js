@@ -190,6 +190,7 @@ class Todo {
 
       if (todo.isComplete) {
         todoTextElement.classList.add("checked");
+        todoElement.classList.add("checked");
       }
 
       todoElement.appendChild(checkboxElement);
