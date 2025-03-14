@@ -16,10 +16,10 @@ class Todo {
   }
 
   handleAddButton() {
-    const inputDiv = document.createElement("div");
+    const inputWrap = document.createElement("div");
     const inputElement = document.createElement("input");
 
-    inputDiv.classList.add("input");
+    inputWrap.classList.add("input");
     inputElement.type = "text";
     inputElement.id = "todo";
     inputElement.classList.add("add_input");
@@ -31,7 +31,7 @@ class Todo {
         this.addTodo(value);
       }
 
-      inputDiv.remove();
+      inputWrap.remove();
     };
 
     inputElement.addEventListener("keypress", (event) => {
@@ -41,8 +41,8 @@ class Todo {
       }
     });
 
-    inputDiv.appendChild(inputElement);
-    this.todoWarp.appendChild(inputDiv);
+    inputWrap.appendChild(inputElement);
+    this.todoWarp.appendChild(inputWrap);
     inputElement.focus();
   }
 
