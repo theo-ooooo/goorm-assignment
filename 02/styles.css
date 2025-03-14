@@ -65,3 +65,41 @@ body {
 input.add_input {
   width: 100% !important;
 }
+
+.todo_item {
+  display: flex;
+  justify-content: space-between;
+  background-color: aquamarine;
+  padding: 15px;
+  border-radius: 5px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.todo_item > .buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.todo_item strong {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.todo_item strong.checked {
+  text-decoration: line-through;
+}
+
+.todo_item button {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.todo_item button.delete_btn {
+  background-color: red;
+}

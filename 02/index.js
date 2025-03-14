@@ -8,6 +8,9 @@ class Todo {
     this.todoWarp.addEventListener("click", (event) =>
       this.handleTodoWrapClick(event)
     );
+    this.todoWarp.addEventListener("change", (event) =>
+      this.handleTodoWrapChange(event)
+    );
     this.getTodosByLocalStorage();
     this.renderTodos();
   }
@@ -60,11 +63,22 @@ class Todo {
     }
   }
 
+  handleTodoWrapChange(event) {
+    const target = event.target;
+    const todoElement = event.target.parentElement;
+    const todoId = todoElement.id;
+
+    const classList = Array.from(target.classList);
+    if (classList.includes("checkbox")) {
+      this.toggleComplete(todoId);
+    }
+  }
+
   addTodo(text) {
     const todo = {
       id: Date.now().toString(),
       text,
-      isComplate: false,
+      isComplete: false,
     };
 
     this.todos = [...this.todos, todo];
@@ -115,6 +129,11 @@ class Todo {
     inputElement.classList.add("add_input");
     inputElement.value = todo.text;
 
+    inputDiv.style.padding = 0;
+
+    const buttons = todoItemElement.querySelector(".buttons");
+    const strongTag = todoItemElement.querySelector("strong");
+
     const handleInput = () => {
       const value = inputElement.value.trim();
       if (value) {
@@ -131,9 +150,25 @@ class Todo {
       }
     });
 
+    buttons.style.display = "none";
+    strongTag.style.display = "none";
+
     inputDiv.appendChild(inputElement);
-    this.todoWarp.appendChild(inputDiv);
+    todoItemElement.appendChild(inputDiv);
     inputElement.focus();
+  }
+
+  toggleComplete(id) {
+    this.todos = this.todos.map((todo) => {
+      console.log(todo, todo.id, id);
+      if (todo.id === id) {
+        return { ...todo, isComplete: !todo.isComplete };
+      }
+      return todo;
+    });
+
+    this.saveByLocalStorage();
+    this.renderTodos();
   }
 
   renderTodos() {
@@ -144,10 +179,21 @@ class Todo {
       todoElement.id = todo.id;
 
       // 텍스트
-      const todoText = document.createElement("strong");
-      todoText.innerText = todo.text;
+      const todoTextElement = document.createElement("strong");
+      todoTextElement.innerText = todo.text;
 
-      todoElement.appendChild(todoText);
+      // 체크 박스
+      const checkboxElement = document.createElement("input");
+      checkboxElement.type = "checkbox";
+      checkboxElement.checked = todo.isComplete;
+      checkboxElement.classList.add("checkbox");
+
+      if (todo.isComplete) {
+        todoTextElement.classList.add("checked");
+      }
+
+      todoElement.appendChild(checkboxElement);
+      todoElement.appendChild(todoTextElement);
       this.todoWarp.appendChild(todoElement);
 
       // 버튼들
