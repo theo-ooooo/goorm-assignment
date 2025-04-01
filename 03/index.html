@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube 클론</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">YouTube</div>
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="검색" />
+        <button type="button" class="search-button">🔍</button>
+      </div>
+      <div style="width: 40px"></div>
+    </header>
+
+    <aside>
+      <nav>
+        <a href="#"><span>🏠</span> 홈</a>
+        <a href="#"><span>🔥</span> 인기</a>
+        <a href="#"><span>🎬</span> Shorts</a>
+        <a href="#"><span>📺</span> 구독</a>
+        <hr />
+        <a href="#"><span>📁</span> 보관함</a>
+        <a href="#"><span>🕒</span> 시청 기록</a>
+        <a href="#"><span>👍</span> 좋아요</a>
+        <a href="#"><span>⏱️</span> 나중에 보기</a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="video-container" id="video-container"></section>
+    </main>
+    <script src="script.js" />
+  </body>
+</html>

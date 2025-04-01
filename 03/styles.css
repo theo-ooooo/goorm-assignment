@@ -1,0 +1,168 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f9f9f9;
+}
+
+/* 헤더 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: red;
+}
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  max-width: 600px;
+  margin: 0 40px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.search-bar button {
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+/* 사이드바 */
+aside {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  width: 200px;
+  height: calc(100% - 56px);
+  background-color: #fff;
+  border-right: 1px solid #ddd;
+  padding: 16px 8px;
+}
+
+aside nav a {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #000;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+aside nav a:hover {
+  background-color: #f2f2f2;
+}
+
+aside nav a.active {
+  background-color: #444444;
+}
+
+aside nav span {
+  margin-right: 12px;
+  width: 24px;
+  text-align: center;
+}
+
+/* 메인 */
+main {
+  margin-left: 200px;
+  padding: 80px 24px 24px;
+}
+
+.video-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.video-card {
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s;
+}
+
+.video-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail-container {
+  position: relative;
+}
+
+.thumbnail-container img {
+  width: 100%;
+  display: block;
+}
+
+.duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.video-meta {
+  display: flex;
+  padding: 12px;
+  gap: 12px;
+}
+
+.video-meta img.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.text {
+  flex: 1;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+.channel,
+.views {
+  font-size: 13px;
+  color: #606060;
+}
+
+.menu {
+  font-size: 18px;
+  cursor: pointer;
+  color: #606060;
+}
