@@ -54,17 +54,15 @@ class Todo {
   }
 
   handleTodoSearch() {
-    const searchText = this.searchInput.value.trim();
+    const searchValue = this.searchInput.value.trim();
 
-    let filterTodos = this.todos;
-
-    if (searchText) {
-      filterTodos = filterTodos.filter(({ text }) => text.includes(searchText));
+    if (searchValue) {
+      let params = new URLSearchParams();
+      params.set("q", searchValue);
+      window.location.href = `index.html?${params.toString()}`;
+    } else {
+      window.location.href = "index.html";
     }
-
-    event.target.value = "";
-
-    this.renderTodos(filterTodos);
   }
 
   handleTodoWrapClick(event) {
@@ -192,11 +190,20 @@ class Todo {
     this.renderTodos();
   }
 
-  renderTodos(propsTodos) {
+  renderTodos() {
     this.todoWarp.innerHTML = "";
+    let todos = this.todos;
+    const params = new URLSearchParams(window.location.search);
 
-    const TODOS = propsTodos || this.todos;
-    TODOS.forEach((todo) => {
+    const searchValue = params.get("q");
+
+    if (searchValue) {
+      todos = todos.filter(({ text }) => text.includes(searchValue));
+      this.searchInput.focus();
+      this.searchInput.value = searchValue;
+    }
+
+    todos.forEach((todo) => {
       const todoElement = document.createElement("div");
       todoElement.classList.add("todo_item");
       todoElement.id = todo.id;
