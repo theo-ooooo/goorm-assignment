@@ -107,3 +107,43 @@ input.add_input {
 .todo_item button.delete_btn {
   background-color: red;
 }
+
+.middle {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  align-items: center;
+}
+
+.middle input {
+  flex: 6;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.middle input:focus {
+  /* background-color: #4f46e5; */
+  /* color: #fff; */
+}
+
+.middle select {
+  flex: 1.5;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: white;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.middle select:focus {
+  border-color: #ccc;
+}

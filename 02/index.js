@@ -3,6 +3,7 @@ class Todo {
     this.todos = [];
     this.todoWarp = document.getElementById("todo_wrap");
     this.addButton = document.getElementById("add_button");
+    this.searchInput = document.getElementById("todo_search");
 
     this.addButton.addEventListener("click", () => this.handleAddButton());
     this.todoWarp.addEventListener("click", (event) =>
@@ -11,6 +12,12 @@ class Todo {
     this.todoWarp.addEventListener("change", (event) =>
       this.handleTodoWrapChange(event)
     );
+
+    this.searchInput.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        this.handleTodoSearch();
+      }
+    });
     this.getTodosByLocalStorage();
     this.renderTodos();
   }
@@ -44,6 +51,20 @@ class Todo {
     inputWrap.appendChild(inputElement);
     this.todoWarp.appendChild(inputWrap);
     inputElement.focus();
+  }
+
+  handleTodoSearch() {
+    const searchText = this.searchInput.value.trim();
+
+    let filterTodos = this.todos;
+
+    if (searchText) {
+      filterTodos = filterTodos.filter(({ text }) => text.includes(searchText));
+    }
+
+    event.target.value = "";
+
+    this.renderTodos(filterTodos);
   }
 
   handleTodoWrapClick(event) {
@@ -171,9 +192,11 @@ class Todo {
     this.renderTodos();
   }
 
-  renderTodos() {
+  renderTodos(propsTodos) {
     this.todoWarp.innerHTML = "";
-    this.todos.forEach((todo) => {
+
+    const TODOS = propsTodos || this.todos;
+    TODOS.forEach((todo) => {
       const todoElement = document.createElement("div");
       todoElement.classList.add("todo_item");
       todoElement.id = todo.id;
