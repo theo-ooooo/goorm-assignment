@@ -4,6 +4,7 @@ class Todo {
     this.todoWarp = document.getElementById("todo_wrap");
     this.addButton = document.getElementById("add_button");
     this.searchInput = document.getElementById("todo_search");
+    this.orderSelect = document.getElementById("order_select");
 
     this.addButton.addEventListener("click", () => this.handleAddButton());
     this.todoWarp.addEventListener("click", (event) =>
@@ -17,6 +18,10 @@ class Todo {
       if (event.key === "Enter") {
         this.handleTodoSearch();
       }
+    });
+
+    this.orderSelect.addEventListener("change", (event) => {
+      this.handleTodoOrderValueChange(event);
     });
     this.getTodosByLocalStorage();
     this.renderTodos();
@@ -56,13 +61,31 @@ class Todo {
   handleTodoSearch() {
     const searchValue = this.searchInput.value.trim();
 
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+
     if (searchValue) {
-      let params = new URLSearchParams();
       params.set("q", searchValue);
-      window.location.href = `index.html?${params.toString()}`;
     } else {
-      window.location.href = "index.html";
+      params.delete("q");
     }
+
+    url.search = params.toString();
+    window.location.href = url.toString();
+  }
+
+  handleTodoOrderValueChange(event) {
+    const orderValue = event.target.value;
+
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+
+    if (orderValue) {
+      params.set("o", orderValue);
+    }
+
+    url.search = params.toString();
+    window.location.href = url.toString();
   }
 
   handleTodoWrapClick(event) {
@@ -190,18 +213,33 @@ class Todo {
     this.renderTodos();
   }
 
+  filterTodos(searchValue, orderValue) {
+    let todos = this.todos;
+    if (searchValue) {
+      todos = todos.filter(({ text }) => text.includes(searchValue));
+      this.searchInput.focus();
+      this.searchInput.value = searchValue;
+    }
+
+    if (orderValue) {
+      this.orderSelect.value = orderValue;
+      todos.sort((a, b) => {
+        return orderValue === "oldest" ? +a.id - +b.id : b.id - a.id;
+      });
+    }
+
+    return todos;
+  }
+
   renderTodos() {
     this.todoWarp.innerHTML = "";
     let todos = this.todos;
     const params = new URLSearchParams(window.location.search);
 
     const searchValue = params.get("q");
+    const orderValue = params.get("o");
 
-    if (searchValue) {
-      todos = todos.filter(({ text }) => text.includes(searchValue));
-      this.searchInput.focus();
-      this.searchInput.value = searchValue;
-    }
+    todos = this.filterTodos(searchValue, orderValue);
 
     todos.forEach((todo) => {
       const todoElement = document.createElement("div");
