@@ -43,23 +43,10 @@ class Todo {
     inputElement.classList.add("add_input");
     inputElement.placeholder = "할일을 입력하세요...";
 
-    // 중요도 select box 추가
-    const prioritySelect = document.createElement("select");
-    prioritySelect.classList.add("priority_select");
-    const priorities = ["low", "medium", "high"];
-
-    priorities.forEach((level) => {
-      const option = document.createElement("option");
-      option.value = level;
-      option.innerText = level.toUpperCase();
-      prioritySelect.appendChild(option);
-    });
-
     const handleInput = () => {
       const value = inputElement.value.trim();
-      const priority = prioritySelect.value;
       if (value) {
-        this.addTodo(value, priority);
+        this.addTodo(value);
       }
 
       inputWrap.remove();
@@ -73,7 +60,6 @@ class Todo {
     });
 
     inputWrap.appendChild(inputElement);
-    inputWrap.appendChild(prioritySelect);
     this.todoWarp.appendChild(inputWrap);
     inputElement.focus();
   }
@@ -153,7 +139,7 @@ class Todo {
     }
   }
 
-  addTodo(text, priority = "row") {
+  addTodo(text, priority = "low") {
     const todo = {
       id: Date.now().toString(),
       text,
@@ -213,7 +199,7 @@ class Todo {
 
     const buttons = todoItemElement.querySelector(".buttons");
     const strongTag = todoItemElement.querySelector("strong");
-    const prioritySelect = todoItemElement.querySelector(".priority_select");
+    const prioritySelect = todoItemElement.querySelector("select");
     const checkbox = todoItemElement.querySelector(".checkbox");
 
     const handleInput = () => {
