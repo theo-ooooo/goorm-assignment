@@ -5,6 +5,7 @@ class Todo {
     this.addButton = document.getElementById("add_button");
     this.searchInput = document.getElementById("todo_search");
     this.orderSelect = document.getElementById("order_select");
+    this.prioritySelect = document.getElementById("priority_select");
 
     this.addButton.addEventListener("click", () => this.handleAddButton());
     this.todoWarp.addEventListener("click", (event) =>
@@ -23,6 +24,11 @@ class Todo {
     this.orderSelect.addEventListener("change", (event) => {
       this.handleTodoOrderValueChange(event);
     });
+
+    this.prioritySelect.addEventListener("change", (event) => {
+      this.handleTodoPriority(event);
+    });
+
     this.getTodosByLocalStorage();
     this.renderTodos();
   }
@@ -82,6 +88,22 @@ class Todo {
       params.set("q", searchValue);
     } else {
       params.delete("q");
+    }
+
+    url.search = params.toString();
+    window.location.href = url.toString();
+  }
+
+  handleTodoPriority() {
+    const priority = this.prioritySelect.value.trim();
+
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+
+    if (priority !== "all") {
+      params.set("p", priority);
+    } else {
+      params.delete("p");
     }
 
     url.search = params.toString();
@@ -246,7 +268,7 @@ class Todo {
     this.renderTodos();
   }
 
-  filterTodos(searchValue, orderValue) {
+  filterTodos(searchValue, orderValue, priorityValue) {
     let todos = this.todos;
     if (searchValue) {
       todos = todos.filter(({ text }) => text.includes(searchValue));
@@ -261,12 +283,19 @@ class Todo {
       });
     }
 
+    if (priorityValue) {
+      this.prioritySelect.value = priorityValue;
+      todos = todos.filter(
+        ({ priority = "low" }) => priority === priorityValue
+      );
+      console.log(todos, priorityValue);
+    }
+
     return todos;
   }
 
   renderPriority(selected) {
     const prioritySelect = document.createElement("select");
-    prioritySelect.classList.add("priority_select");
     const priorities = ["low", "medium", "high"];
 
     priorities.forEach((level) => {
@@ -289,8 +318,9 @@ class Todo {
 
     const searchValue = params.get("q");
     const orderValue = params.get("o");
+    const priorityValue = params.get("p");
 
-    todos = this.filterTodos(searchValue, orderValue);
+    todos = this.filterTodos(searchValue, orderValue, priorityValue);
 
     todos.forEach((todo) => {
       const todoElement = document.createElement("div");
