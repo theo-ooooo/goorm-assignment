@@ -68,12 +68,18 @@ input.add_input {
 
 .todo_item {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
+  /* justify-content: space-between; */
   background-color: aquamarine;
   padding: 15px;
   border-radius: 5px;
   align-items: center;
   box-sizing: border-box;
+}
+
+.todo_item strong {
+  flex: 6;
+  text-align: center;
 }
 
 .todo_item.checked {

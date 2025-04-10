@@ -37,10 +37,23 @@ class Todo {
     inputElement.classList.add("add_input");
     inputElement.placeholder = "할일을 입력하세요...";
 
+    // 중요도 select box 추가
+    const prioritySelect = document.createElement("select");
+    prioritySelect.classList.add("priority_select");
+    const priorities = ["low", "medium", "high"];
+
+    priorities.forEach((level) => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.innerText = level.toUpperCase();
+      prioritySelect.appendChild(option);
+    });
+
     const handleInput = () => {
       const value = inputElement.value.trim();
+      const priority = prioritySelect.value;
       if (value) {
-        this.addTodo(value);
+        this.addTodo(value, priority);
       }
 
       inputWrap.remove();
@@ -54,6 +67,7 @@ class Todo {
     });
 
     inputWrap.appendChild(inputElement);
+    inputWrap.appendChild(prioritySelect);
     this.todoWarp.appendChild(inputWrap);
     inputElement.focus();
   }
@@ -98,7 +112,6 @@ class Todo {
     const todo = this.todos.find((todo) => todo.id === todoId);
 
     if (classList.includes("delete_btn")) {
-      console.log(todoElement, todoId);
       this.deleteTodo(todoId);
     } else if (classList.includes("edit_btn")) {
       this.editMode(todoElement, todo);
@@ -113,14 +126,17 @@ class Todo {
     const classList = Array.from(target.classList);
     if (classList.includes("checkbox")) {
       this.toggleComplete(todoId);
+    } else if (classList.includes("priority_select")) {
+      this.togglePriority(todoId, target.value);
     }
   }
 
-  addTodo(text) {
+  addTodo(text, priority = "row") {
     const todo = {
       id: Date.now().toString(),
       text,
       isComplete: false,
+      priority,
     };
 
     this.todos = [...this.todos, todo];
@@ -175,6 +191,8 @@ class Todo {
 
     const buttons = todoItemElement.querySelector(".buttons");
     const strongTag = todoItemElement.querySelector("strong");
+    const prioritySelect = todoItemElement.querySelector(".priority_select");
+    const checkbox = todoItemElement.querySelector(".checkbox");
 
     const handleInput = () => {
       const value = inputElement.value.trim();
@@ -194,17 +212,32 @@ class Todo {
 
     buttons.style.display = "none";
     strongTag.style.display = "none";
+    prioritySelect.style.display = "none";
+    checkbox.style.display = "none";
 
     inputDiv.appendChild(inputElement);
+
     todoItemElement.appendChild(inputDiv);
     inputElement.focus();
   }
 
   toggleComplete(id) {
     this.todos = this.todos.map((todo) => {
-      console.log(todo, todo.id, id);
       if (todo.id === id) {
         return { ...todo, isComplete: !todo.isComplete };
+      }
+      return todo;
+    });
+
+    this.saveByLocalStorage();
+    this.renderTodos();
+  }
+
+  togglePriority(id, priority) {
+    console.log(id, priority);
+    this.todos = this.todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, priority };
       }
       return todo;
     });
@@ -229,6 +262,24 @@ class Todo {
     }
 
     return todos;
+  }
+
+  renderPriority(selected) {
+    const prioritySelect = document.createElement("select");
+    prioritySelect.classList.add("priority_select");
+    const priorities = ["low", "medium", "high"];
+
+    priorities.forEach((level) => {
+      const option = document.createElement("option");
+      option.value = level;
+      option.innerText = level.toUpperCase();
+      if (level === selected) {
+        option.selected = true;
+      }
+      prioritySelect.appendChild(option);
+    });
+
+    return prioritySelect;
   }
 
   renderTodos() {
@@ -256,12 +307,16 @@ class Todo {
       checkboxElement.checked = todo.isComplete;
       checkboxElement.classList.add("checkbox");
 
+      // 중요도 박스
+      const prioritySelect = this.renderPriority(todo.priority);
+
       if (todo.isComplete) {
         todoTextElement.classList.add("checked");
         todoElement.classList.add("checked");
       }
 
       todoElement.appendChild(checkboxElement);
+      todoElement.appendChild(prioritySelect);
       todoElement.appendChild(todoTextElement);
       this.todoWarp.appendChild(todoElement);
 
