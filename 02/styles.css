@@ -21,6 +21,17 @@ body {
   gap: 20px;
 }
 
+@media (max-width: 650px) {
+  .todos_wrap {
+    width: 100%;
+  }
+
+  .todos_wrap > .header {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
 .todos_wrap > .header {
   color: white;
   display: flex;

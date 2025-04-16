@@ -132,9 +132,11 @@ class Todo {
     const todoId = todoElement.id;
 
     const classList = Array.from(target.classList);
+    console.log(target);
     if (classList.includes("checkbox")) {
       this.toggleComplete(todoId);
     } else if (classList.includes("priority_select")) {
+      console.log(12321231);
       this.togglePriority(todoId, target.value);
     }
   }
@@ -280,9 +282,13 @@ class Todo {
     return todos;
   }
 
-  renderPriority(selected) {
+  renderPriority(selected, classname) {
     const prioritySelect = document.createElement("select");
     const priorities = ["low", "medium", "high"];
+
+    if (classname) {
+      prioritySelect.classList.add("priority_select");
+    }
 
     priorities.forEach((level) => {
       const option = document.createElement("option");
@@ -324,7 +330,7 @@ class Todo {
       checkboxElement.classList.add("checkbox");
 
       // 중요도 박스
-      const prioritySelect = this.renderPriority(todo.priority);
+      const prioritySelect = this.renderPriority(todo.priority, true);
 
       if (todo.isComplete) {
         todoTextElement.classList.add("checked");
