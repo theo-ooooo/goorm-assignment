@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="./assets/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="js/main.js"></script>
+    <title>To Do</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="w-full min-w-md max-w-4xl bg-white rounded shadow-md p-6 m-4">
+      <!-- Header -->
+      <header class="mb-6">
+        <!-- Add task -->
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-2xl font-bold text-gray-800">To Do</h1>
+          <button
+            id="add-button"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center"
+          >
+            <i class="fas fa-plus mr-2"></i>
+            Add Task
+          </button>
+        </div>
+
+        <!-- Search Filter Sort -->
+        <div
+          class="flex flex-col sm:flex-row gap-3 justify-between items-center"
+        >
+          <!-- Search -->
+          <div class="relative w-full sm:w-2/3">
+            <span
+              class="absolute inset-y-0 left-3 flex items-center text-gray-400"
+            >
+              <i class="fas fa-search"></i>
+            </span>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search tasks..."
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
+            />
+          </div>
+
+          <!-- Filter Sort options -->
+          <div class="flex gap-2 w-full sm:w-auto">
+            <!-- Filter -->
+            <div class="relative flex-1 sm:flex-none">
+              <select
+                id="filter-select"
+                class="appearance-none w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
+              >
+                <option value="all">All Tasks</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+              </select>
+              <span
+                class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none"
+              >
+                <i class="fas fa-filter"></i>
+              </span>
+            </div>
+
+            <!-- Sort -->
+            <div class="relative flex-1 sm:flex-none">
+              <select
+                id="sort-select"
+                class="appearance-none w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition duration-200"
+              >
+                <option value="newest">Newest</option>
+                <option value="oldest">Oldest</option>
+                <option value="importance">Importance</option>
+              </select>
+              <span
+                class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none"
+              >
+                <i class="fas fa-sort"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Task List -->
+      <div id="tasks-container" class="mt-6">
+        <p id="empty-task" class="text-center text-gray-400 py-4 hidden">
+          No tasks yet. Add your first task!
+        </p>
+      </div>
+
+      <!-- Add task modal -->
+      <div
+        id="task-form-container"
+        class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 z-50 flex items-center justify-center"
+      >
+        <div
+          class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 transform transition-all"
+        >
+          <!-- Modal header -->
+          <div class="border-b px-6 py-3 flex items-center justify-between">
+            <h3 class="text-lg font-medium text-gray-900">Add New Task</h3>
+            <button id="modal-close" class="text-gray-400 hover:text-gray-500">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="p-6">
+            <form id="task-form" class="space-y-4">
+              <div>
+                <label
+                  for="task-input"
+                  class="block text-sm font-medium text-gray-700 mb-1"
+                  >Task Description</label
+                >
+                <input
+                  type="text"
+                  id="task-input"
+                  placeholder="Enter your task..."
+                  class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  required
+                />
+              </div>
+
+              <!-- Modal footer -->
+              <div class="flex justify-end gap-2 pt-4">
+                <button
+                  type="button"
+                  id="cancel-button"
+                  class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"
+                >
+                  Add
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
