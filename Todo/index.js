@@ -16,6 +16,7 @@ class Todo {
     this.taskInputElement = document.getElementById("task-input");
     this.taskFormContainer = document.getElementById("task-form-container");
     this.taskFromCancelButton = document.getElementById("cancel-button");
+    this.taskFromCloseButton = document.getElementById("modal-close");
     this.taskFromAddButton = document.getElementById("add-button");
   }
 
@@ -26,6 +27,7 @@ class Todo {
       if (e.key === "Enter") e.preventDefault(), this.handleInput();
     });
     this.taskFromCancelButton.addEventListener("click", () => this.hideTaskForm());
+    this.taskFromCloseButton.addEventListener("click", () => this.hideTaskForm());
 
     this.todoWarp.addEventListener("click", (e) => this.handleTodoClick(e));
     this.todoWarp.addEventListener("change", (e) => this.handleTodoChange(e));
